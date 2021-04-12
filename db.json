@@ -1,0 +1,58 @@
+{
+  "cartItems": [
+    {
+      "id": 1,
+      "name": "banana",
+      "amount": 3
+    },
+    {
+      "id": 2,
+      "name": "grape",
+      "amount": 5
+    },
+    {
+      "id": 4,
+      "name": "watermelon",
+      "amount": 1
+    },
+    {
+      "id": 3,
+      "name": "mango",
+      "amount": 1
+    }
+  ],
+  "productItems": [
+    {
+      "id": 1,
+      "name": "banana"
+    },
+    {
+      "id": 2,
+      "name": "grape"
+    },
+    {
+      "id": 3,
+      "name": "mango"
+    },
+    {
+      "id": 4,
+      "name": "watermelon"
+    },
+    {
+      "id": 5,
+      "name": "apple"
+    },
+    {
+      "id": 6,
+      "name": "mangoteen"
+    },
+    {
+      "id": 7,
+      "name": "pineapple"
+    },
+    {
+      "id": 8,
+      "name": "cucumber"
+    }
+  ]
+}
