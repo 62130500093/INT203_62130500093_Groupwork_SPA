@@ -1,0 +1,26 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+.app{
+    @apply flex flex-col items-center justify-center
+}
+#welcomeMsg{
+    @apply mt-20
+}
+.hello{
+    @apply text-4xl font-bold
+}
+.btn{
+    @apply flex text-xl mt-32 font-semibold justify-between
+}
+
+#viewBtn{
+    @apply bg-green-500 p-5 relative right-10
+}
+
+#contactBtn{
+    @apply bg-green-500 p-5 relative left-10
+}
