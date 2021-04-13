@@ -3,56 +3,59 @@
     {
       "id": 1,
       "name": "banana",
-      "amount": 3
+      "amount": 1
     },
     {
       "id": 2,
       "name": "grape",
-      "amount": 5
+      "amount": 4
     },
     {
       "id": 4,
       "name": "watermelon",
-      "amount": 1
-    },
-    {
-      "id": 3,
-      "name": "mango",
       "amount": 1
     }
   ],
   "productItems": [
     {
       "id": 1,
-      "name": "banana"
+      "name": "banana",
+      "editAmountItem": "false"
     },
     {
       "id": 2,
-      "name": "grape"
+      "name": "grape",
+      "editAmountItem": "false"
     },
     {
       "id": 3,
-      "name": "mango"
+      "name": "mango",
+      "editAmountItem": "false"
     },
     {
       "id": 4,
-      "name": "watermelon"
+      "name": "watermelon",
+      "editAmountItem": "false"
     },
     {
       "id": 5,
-      "name": "apple"
+      "name": "apple",
+      "editAmountItem": "false"
     },
     {
       "id": 6,
-      "name": "mangoteen"
+      "name": "mangoteen",
+      "editAmountItem": "false"
     },
     {
       "id": 7,
-      "name": "pineapple"
+      "name": "pineapple",
+      "editAmountItem": "false"
     },
     {
       "id": 8,
-      "name": "cucumber"
+      "name": "cucumber",
+      "editAmountItem": "false"
     }
   ]
 }
