@@ -35,7 +35,7 @@ export default {
       if (checkItem > 0) {
         console.log(additem.name + " is already in cart.");
       } else {
-        this.item = { id: additem.id, name: additem.name, amount: 1 };
+        this.item = { id: additem.id, name: additem.name, img: additem.img,amount: 1 };
         this.addItemtoCart(this.item);
       }
     },
@@ -49,6 +49,7 @@ export default {
           body: JSON.stringify({
             id: newItem.id,
             name: newItem.name,
+            img : newItem.img,
             amount: newItem.amount,
           }),
         });

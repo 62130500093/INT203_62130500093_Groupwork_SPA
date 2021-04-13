@@ -12,21 +12,21 @@
           ><img
             width="50"
             height="50"
-            src="https://www.myskinrecipes.com/shop/1446-thickbox/banana-flavor-%E0%B8%A3%E0%B8%AA%E0%B8%81%E0%B8%A5%E0%B9%89%E0%B8%A7%E0%B8%A2.jpg"
+            :src="item.img"
         /></span>
         <span>{{ item.name }}</span>
       </div>
         <span v-if="!item.editAmountItem">&nbsp;{{ item.amount }}</span>
         <form v-if="item.editAmountItem">
           <span><button @click.prevent="minusAmount(item)">&lt;</button></span>
-          <input type="text" name="amountOfItem" v-model="item.amount" />
+          <input class="w-5" type="text" name="amountOfItem" v-model="item.amount" />
           <span><button @click.prevent="plusAmount(item)">&gt;</button></span>
-          <button @click.prevent ="saveChange(item)">save</button>
+          <button @click.prevent ="saveChange(item)"><img src="@/assets/save.png"></button>
         </form>
         <button v-if="!item.editAmountItem" @click="item.editAmountItem = true">
-          edit
+          <img src="@/assets/edit.png">
         </button>
-        <span>&nbsp;<button @click="deleteItem(item)">--</button></span>
+        <span>&nbsp;<button @click="deleteItem(item)"><img src="@/assets/delete.png"></button></span>
   
     </div>
   </div>

@@ -3,14 +3,14 @@
     <h1>product</h1>
     <div class="grid grid-flow-row grid-cols-2 gap-4">
       <div v-for="item in productItem" :key="item.id">
-        <div class="flex border">
+        <div class="flex border justify-center items-center">
           <div>
             <img
-              width="200"
-              height="200"
-              src="https://www.myskinrecipes.com/shop/1446-thickbox/banana-flavor-%E0%B8%A3%E0%B8%AA%E0%B8%81%E0%B8%A5%E0%B9%89%E0%B8%A7%E0%B8%A2.jpg"
+              width="150"
+              height="150"
+              :src="item.img"
             />
-            <p>{{ item.name }} <span><button @click="addItemtoCart(item)"> + </button></span></p>
+            <div>{{ item.name }} <span><button @click="addItemtoCart(item)"><img src="@/assets/add.png"></button></span></div>
           </div>
         </div>
       </div>
