@@ -38,7 +38,7 @@ export default {
   props: {
     itemsInCart: Array,
   },
-  emits: ["delete-item","new-amount-item"],
+  emits: ["delete-item","new-amount-item","cart-error-msg"],
   data() {
     return {
       cart: this.itemsInCart,
@@ -47,19 +47,31 @@ export default {
     };
   },
   methods: {
+    sendErrorMessage(msg){
+      this.$emit('cart-error-msg',msg);
+    },
     saveChange(item) {
-      if(item.amount > 50) item.amount = 50;
+      if(item.amount > 50) {
+        this.sendErrorMessage(' maximum amount ! (50) ');
+        return;
+      }
       item.editAmountItem = false;
       this.$emit('new-amount-item',item,item.amount);
     },
     minusAmount(item){
-      if(item.amount == 0) {item.amout = 0;}
+      if(item.amount == 0)  {
+        this.sendErrorMessage(' minimum amount ! (0) ');
+        return;
+      }
       else{
         item.amount--;
       }
     },
     plusAmount(item){
-      if(item.amount > 50) {item.amount = 50;}
+      if(item.amount == 50)  {
+        this.sendErrorMessage(' maximum amount ! (50) ');
+        return;
+      }
       else{
         item.amount++;
       }

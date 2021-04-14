@@ -1,12 +1,15 @@
 <template>
   <div class="cart">
+    <p v-if="errorCart"> {{messageCart}} </p>
     <cart-item
       @new-amount-item="editCartItem"
       @delete-item="deleteCartItem"
       :itemsInCart="cartItem"
+      @cart-error-msg="showCartErrorMessage"
     />
   </div>
   <div class="product">
+    <p v-if="errorProduct"> {{messageProduct}} </p>
     <product-item @add-item-to-cart="showItemtoCart" />
   </div>
 </template>
@@ -26,14 +29,23 @@ export default {
       cartUrl: "http://localhost:3000/cartItems",
       cartItem: [],
       item: null,
+      messageProduct : null,
+      messageCart : null,
+      errorCart : false,
+      errorProduct : false
     };
   },
   methods: {
+    showCartErrorMessage(msg){
+      this.errorCart = true;
+      this.messageCart = msg;
+    },
     showItemtoCart(additem) {
       let checkItem = 0;
       this.cartItem.map((item) => (item.id == additem.id ? checkItem++ : item));
       if (checkItem > 0) {
-        console.log(additem.name + " is already in cart.");
+        this.errorProduct = true;
+        this.messageProduct = additem.name + " is already in cart.";
       } else {
         this.item = { id: additem.id, name: additem.name, img: additem.img,amount: 1 };
         this.addItemtoCart(this.item);
@@ -59,10 +71,12 @@ export default {
       } catch (error) {
         console.log(`Could not save ! ${error}`);
       }
+      this.errorCart = false;
+      this.errorProduct = false;
     },
     async editCartItem(editingItem, newAmount) {
       if (newAmount > 50) {
-        console.log("maximun amount !");
+        this.messageCart = "maximun amount ! (50)";
         return;
       }
       console.log(newAmount);
@@ -86,6 +100,7 @@ export default {
       } catch (error) {
         console.log(`Could not edit ! ${error}`);
       }
+      this.errorCart = false;
     },
     async deleteCartItem(deleteItem) {
       try {
@@ -98,6 +113,7 @@ export default {
       } catch (error) {
         console.log(`Could not save ! ${error}`);
       }
+      this.errorCart = false;
     },
     async getCartItems() {
       const res = await fetch(this.cartUrl);
