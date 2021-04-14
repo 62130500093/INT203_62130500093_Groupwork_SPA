@@ -55,6 +55,15 @@ export default {
         this.sendErrorMessage(' maximum amount ! (50) ');
         return;
       }
+      if(item.amount < 0) {
+        this.sendErrorMessage(' minimum amount ! (0) ');
+        return;
+      }
+      if(item.amount == 0 ){
+        this.deleteItem(item);
+        item.editAmountItem = false;
+        return;
+      }
       item.editAmountItem = false;
       this.$emit('new-amount-item',item,item.amount);
     },
