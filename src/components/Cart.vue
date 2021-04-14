@@ -1,6 +1,15 @@
 <template>
-    <h1>Cart</h1>
-  <div class="grid grid-flow-col grid-rows-1 gap-4 border-2">
+  <div class="grid grid-flow-col grid-rows-1 gap-4 border-2" :class="{'h-28': 'h-32'}">
+    <div class="flex flex-row items-center justify-center" v-if="!checkItem()">
+      <div class="text-center">Empty Cart.</div>
+      <div>
+        <img
+          width="30"
+          height="30"
+          src="https://www.pinclipart.com/picdir/middle/139-1395741_shopping-cart-sign-comments-free-icon-empty-cart.png"
+        />
+      </div>
+    </div>
     <!-- {{itemsInCart}} -->
     <div
       class="border border-black border-10"
@@ -8,26 +17,30 @@
       :key="item.id"
     >
       <div class="flex flex-col text-center justify-center items-center">
-        <span
-          ><img
-            width="50"
-            height="50"
-            :src="item.img"
-        /></span>
+        <span><img width="50" height="50" :src="item.img" /></span>
         <span>{{ item.name }}</span>
       </div>
-        <span v-if="!item.editAmountItem">&nbsp;{{ item.amount }}</span>
-        <form v-if="item.editAmountItem">
-          <span><button @click.prevent="minusAmount(item)">&lt;</button></span>
-          <input class="w-5" type="text" name="amountOfItem" v-model="item.amount" />
-          <span><button @click.prevent="plusAmount(item)">&gt;</button></span>
-          <button @click.prevent ="saveChange(item)"><img src="@/assets/save.png"></button>
-        </form>
-        <button v-if="!item.editAmountItem" @click="item.editAmountItem = true">
-          <img src="@/assets/edit.png">
+      <span v-if="!item.editAmountItem">&nbsp;{{ item.amount }}</span>
+      <form v-if="item.editAmountItem">
+        <span><button @click.prevent="minusAmount(item)">&lt;</button></span>
+        <input
+          class="w-5"
+          type="text"
+          name="amountOfItem"
+          v-model="item.amount"
+        />
+        <span><button @click.prevent="plusAmount(item)">&gt;</button></span>
+        <button @click.prevent="saveChange(item)">
+          <img src="@/assets/save.png" />
         </button>
-        <span>&nbsp;<button @click="deleteItem(item)"><img src="@/assets/delete.png"></button></span>
-  
+      </form>
+      <button v-if="!item.editAmountItem" @click="item.editAmountItem = true">
+        <img src="@/assets/edit.png" />
+      </button>
+      <span
+        >&nbsp;<button @click="deleteItem(item)">
+          <img src="@/assets/delete.png" /></button
+      ></span>
     </div>
   </div>
 </template>
@@ -38,54 +51,59 @@ export default {
   props: {
     itemsInCart: Array,
   },
-  emits: ["delete-item","new-amount-item","cart-error-msg"],
+  emits: ["delete-item", "new-amount-item", "cart-error-msg"],
   data() {
     return {
       cart: this.itemsInCart,
       amountOfItem: null,
-      editAmountItem: false,
+      hasItem: true,
     };
   },
   methods: {
-    sendErrorMessage(msg){
-      this.$emit('cart-error-msg',msg);
+    checkItem() {
+      let num = 0;
+      this.itemsInCart.forEach(function (rating) {
+        if (rating != null) num++;
+      });
+      if (num > 0) return true;
+      return false;
+    },
+    sendErrorMessage(msg) {
+      this.$emit("cart-error-msg", msg);
     },
     saveChange(item) {
-      if(item.amount > 50) {
-        this.sendErrorMessage(' maximum amount ! (50) ');
+      if (item.amount > 50) {
+        this.sendErrorMessage(" maximum amount ! (50) ");
         return;
       }
-      if(item.amount < 0) {
-        this.sendErrorMessage(' minimum amount ! (0) ');
+      if (item.amount < 0) {
+        this.sendErrorMessage(" minimum amount ! (0) ");
         return;
       }
-      if(item.amount == 0 ){
+      if (item.amount == 0) {
         this.deleteItem(item);
         item.editAmountItem = false;
         return;
       }
       item.editAmountItem = false;
-      this.$emit('new-amount-item',item,item.amount);
+      this.$emit("new-amount-item", item, item.amount);
     },
-    minusAmount(item){
-      if(item.amount == 0)  {
-        this.sendErrorMessage(' minimum amount ! (0) ');
+    minusAmount(item) {
+      if (item.amount == 0) {
+        this.sendErrorMessage(" minimum amount ! (0) ");
         return;
-      }
-      else{
+      } else {
         item.amount--;
       }
     },
-    plusAmount(item){
-      if(item.amount == 50)  {
-        this.sendErrorMessage(' maximum amount ! (50) ');
+    plusAmount(item) {
+      if (item.amount == 50) {
+        this.sendErrorMessage(" maximum amount ! (50) ");
         return;
-      }
-      else{
+      } else {
         item.amount++;
       }
-    }
-    ,
+    },
     deleteItem(item) {
       this.$emit("delete-item", item);
     },

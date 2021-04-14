@@ -1,6 +1,5 @@
 <template>
   <div class="product">
-    <h1>product</h1>
     <div class="grid grid-flow-row grid-cols-2 gap-4">
       <div v-for="item in productItem" :key="item.id">
         <div class="flex border justify-center items-center">

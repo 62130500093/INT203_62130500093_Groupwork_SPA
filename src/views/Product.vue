@@ -1,6 +1,7 @@
 <template>
   <div class="cart">
-    <p v-if="errorCart"> {{messageCart}} </p>
+    <h1>Cart</h1>
+    <p v-if="errorCart">{{ messageCart }}</p>
     <cart-item
       @new-amount-item="editCartItem"
       @delete-item="deleteCartItem"
@@ -9,7 +10,8 @@
     />
   </div>
   <div class="product">
-    <p v-if="errorProduct"> {{messageProduct}} </p>
+    <h1>product</h1>
+    <p v-if="errorProduct">{{ messageProduct.message }}</p>
     <product-item @add-item-to-cart="showItemtoCart" />
   </div>
 </template>
@@ -29,14 +31,14 @@ export default {
       cartUrl: "http://localhost:3000/cartItems",
       cartItem: [],
       item: null,
-      messageProduct : null,
-      messageCart : null,
-      errorCart : false,
-      errorProduct : false
+      messageProduct: { message: "", product: null },
+      messageCart: null,
+      errorCart: false,
+      errorProduct: false,
     };
   },
   methods: {
-    showCartErrorMessage(msg){
+    showCartErrorMessage(msg) {
       this.errorCart = true;
       this.messageCart = msg;
     },
@@ -45,9 +47,15 @@ export default {
       this.cartItem.map((item) => (item.id == additem.id ? checkItem++ : item));
       if (checkItem > 0) {
         this.errorProduct = true;
-        this.messageProduct = additem.name + " is already in cart.";
+        this.messageProduct.message = additem.name + " is already in cart.";
+        this.messageProduct.product = additem;
       } else {
-        this.item = { id: additem.id, name: additem.name, img: additem.img,amount: 1 };
+        this.item = {
+          id: additem.id,
+          name: additem.name,
+          img: additem.img,
+          amount: 1,
+        };
         this.addItemtoCart(this.item);
       }
     },
@@ -61,7 +69,7 @@ export default {
           body: JSON.stringify({
             id: newItem.id,
             name: newItem.name,
-            img : newItem.img,
+            img: newItem.img,
             amount: newItem.amount,
           }),
         });
@@ -114,6 +122,10 @@ export default {
         console.log(`Could not save ! ${error}`);
       }
       this.errorCart = false;
+      if (deleteItem.id == this.messageProduct.product.id) {
+        this.messageProduct.message = "";
+        this.messageProduct.product = null;
+      }
     },
     async getCartItems() {
       const res = await fetch(this.cartUrl);
