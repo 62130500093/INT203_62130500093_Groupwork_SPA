@@ -1,6 +1,12 @@
 <template>
-  <div class="grid grid-flow-col grid-rows-1 gap-4 border-2" :class="{'h-28': 'h-32'}">
-    <div class="flex flex-row items-center justify-center" v-if="!checkItem()">
+  <div
+    class="flex flex-wrap border-2 overflow-scroll"
+    :class="{ 'h-36': 'h-32' }"
+  >
+    <div
+      class="flex flex-row items-center justify-center mx-auto"
+      v-if="!checkItem()"
+    >
       <div class="text-center">Empty Cart.</div>
       <div>
         <img
@@ -12,35 +18,62 @@
     </div>
     <!-- {{itemsInCart}} -->
     <div
-      class="border border-black border-10"
+      class="border border-black border-10 w-80"
       v-for="item in itemsInCart"
       :key="item.id"
     >
-      <div class="flex flex-col text-center justify-center items-center">
-        <span><img width="50" height="50" :src="item.img" /></span>
-        <span>{{ item.name }}</span>
+      <div>
+        <div class="flex justify-center items-center h-20">
+          <img width="50" height="50" :src="item.img" />
+        </div>
       </div>
-      <span v-if="!item.editAmountItem">&nbsp;{{ item.amount }}</span>
-      <form v-if="item.editAmountItem">
-        <span><button @click.prevent="minusAmount(item)">&lt;</button></span>
-        <input
-          class="w-5"
-          type="text"
-          name="amountOfItem"
-          v-model="item.amount"
-        />
-        <span><button @click.prevent="plusAmount(item)">&gt;</button></span>
-        <button @click.prevent="saveChange(item)">
-          <img src="@/assets/save.png" />
-        </button>
-      </form>
-      <button v-if="!item.editAmountItem" @click="item.editAmountItem = true">
-        <img src="@/assets/edit.png" />
-      </button>
-      <span
-        >&nbsp;<button @click="deleteItem(item)">
-          <img src="@/assets/delete.png" /></button
-      ></span>
+      <div class="flex flex-row items-center justify-center">
+        <div>{{ item.name }}</div>
+        <div v-if="!item.editAmountItem">
+          &nbsp;{{ item.amount }}
+        </div>
+        <div
+          class="flex flex-row items-center justify-center"
+          v-if="item.editAmountItem"
+        >
+          <div>
+            <button @click.prevent="minusAmount(item)">
+              &lt;
+            </button>
+          </div>
+          <div>
+          <input
+            class="w-5 text-center"
+            type="text"
+            name="amountOfItem"
+            v-model="item.amount"
+          />
+          </div>
+          <div>
+            <button @click.prevent="plusAmount(item)">
+              &gt;
+            </button>
+          </div>
+          <div>
+            <button @click.prevent="saveChange(item)">
+              <img src="@/assets/save.png" />
+            </button>
+          </div>
+        </div>
+        <div>
+          <button
+            v-if="!item.editAmountItem"
+            @click="item.editAmountItem = true"
+          >
+            <img src="@/assets/edit.png" />
+          </button>
+        </div>
+        <div>
+          &nbsp;<button @click="deleteItem(item)">
+            <img src="@/assets/delete.png" />
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -62,8 +95,8 @@ export default {
   methods: {
     checkItem() {
       let num = 0;
-      this.itemsInCart.forEach(function (rating) {
-        if (rating != null) num++;
+      this.itemsInCart.forEach(function (item) {
+        if (item != null) num++;
       });
       if (num > 0) return true;
       return false;
@@ -107,7 +140,6 @@ export default {
     deleteItem(item) {
       this.$emit("delete-item", item);
     },
-    submitForm() {},
   },
 };
 </script>

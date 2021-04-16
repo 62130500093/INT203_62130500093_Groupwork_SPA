@@ -1,4 +1,5 @@
 <template>
+<div class="mx-10">
   <div class="cart">
     <h1>Cart</h1>
     <p v-if="errorCart">{{ messageCart }}</p>
@@ -14,6 +15,7 @@
     <p v-if="errorProduct">{{ messageProduct.message }}</p>
     <product-item @add-item-to-cart="showItemtoCart" />
   </div>
+</div>
 </template>
 
 <script>
@@ -97,6 +99,7 @@ export default {
           body: JSON.stringify({
             id: editingItem.id,
             name: editingItem.name,
+            img : editingItem.img,
             amount: newAmount,
           }),
         });
@@ -122,9 +125,11 @@ export default {
         console.log(`Could not save ! ${error}`);
       }
       this.errorCart = false;
+      if(this.messageProduct.product != null){
       if (deleteItem.id == this.messageProduct.product.id) {
         this.messageProduct.message = "";
         this.messageProduct.product = null;
+      }
       }
     },
     async getCartItems() {
