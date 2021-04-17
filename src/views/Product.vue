@@ -30,6 +30,7 @@
       <product-item @add-item-to-cart="showItemtoCart" />
     </div>
   </div>
+  <bottom><copyright-component></copyright-component></bottom>
 </template>
 
 <script>

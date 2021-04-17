@@ -11,6 +11,7 @@
     </div>
   </div>
   </div>
+  <bottom><copyright-component></copyright-component></bottom>
 </template>
 
 <script>
