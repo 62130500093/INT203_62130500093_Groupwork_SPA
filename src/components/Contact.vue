@@ -5,6 +5,8 @@
     <img class="mt-3" :src="profile" />
     <h1 class="mt-5">Developed by 62130500093</h1>
     <h1>Name : Sahachai Senarak</h1>
+    <h1>Email : sahachai.kmutt@mail.kmutt.ac.th</h1>
+    <h1>phone (for work) : +66 81 9445197 </h1>
       </div>
   </div>
 </template>
