@@ -1,12 +1,5 @@
 {
-  "cartItems": [
-    {
-      "id": 2,
-      "name": "grape",
-      "img": "https://mukuzani.ge/modules/grapes/uploads/1.png",
-      "amount": 1
-    }
-  ],
+  "cartItems": [],
   "productItems": [
     {
       "id": 1,

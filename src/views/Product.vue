@@ -1,21 +1,35 @@
 <template>
-<div class="mx-10">
-  <div class="cart">
-    <h1>Cart</h1>
-    <p v-if="errorCart">{{ messageCart }}</p>
-    <cart-item
-      @new-amount-item="editCartItem"
-      @delete-item="deleteCartItem"
-      :itemsInCart="cartItem"
-      @cart-error-msg="showCartErrorMessage"
-    />
+  <div class="mx-10">
+    <div class="cart">
+      <div class="flex flex-row items-center">
+        <div><img src="@/assets/shoppingCart.png" /></div>
+        <div class="text-xl font-bold text-indigo-800">Cart</div>
+        <div
+          class="animate-pulse relative left-96 text-l text-red-600 font-semibold"
+          v-if="errorCart"
+        >
+          Warning ! : <span class="font-medium">{{ messageCart }}</span>
+        </div>
+      </div>
+      <cart-item
+        @new-amount-item="editCartItem"
+        @delete-item="deleteCartItem"
+        :itemsInCart="cartItem"
+        @cart-error-msg="showCartErrorMessage"
+      />
+    </div>
+    <div class="relative top-10">
+      <h1 class="text-xl font-bold text-indigo-900">Our Products</h1>
+      <div
+        class="animate-pulse text-l text-red-600 font-semibold"
+        v-if="errorProduct"
+      >
+        Warning ! :
+        <span class="font-medium">{{ messageProduct.message }}</span>
+      </div>
+      <product-item @add-item-to-cart="showItemtoCart" />
+    </div>
   </div>
-  <div class="product">
-    <h1>product</h1>
-    <p v-if="errorProduct">{{ messageProduct.message }}</p>
-    <product-item @add-item-to-cart="showItemtoCart" />
-  </div>
-</div>
 </template>
 
 <script>
@@ -49,7 +63,7 @@ export default {
       this.cartItem.map((item) => (item.id == additem.id ? checkItem++ : item));
       if (checkItem > 0) {
         this.errorProduct = true;
-        this.messageProduct.message = additem.name + " is already in cart.";
+        this.messageProduct.message = additem.name + " is already in cart. Please, edit amount for more quantity.";
         this.messageProduct.product = additem;
       } else {
         this.item = {
@@ -99,7 +113,7 @@ export default {
           body: JSON.stringify({
             id: editingItem.id,
             name: editingItem.name,
-            img : editingItem.img,
+            img: editingItem.img,
             amount: newAmount,
           }),
         });
@@ -125,11 +139,12 @@ export default {
         console.log(`Could not save ! ${error}`);
       }
       this.errorCart = false;
-      if(this.messageProduct.product != null){
-      if (deleteItem.id == this.messageProduct.product.id) {
-        this.messageProduct.message = "";
-        this.messageProduct.product = null;
-      }
+      if (this.messageProduct.product != null) {
+        if (deleteItem.id == this.messageProduct.product.id) {
+          this.messageProduct.message = "";
+          this.messageProduct.product = null;
+          this.errorProduct = false;
+        }
       }
     },
     async getCartItems() {

@@ -18,9 +18,9 @@
 }
 
 #viewBtn{
-    @apply bg-green-500 p-5 relative right-10
+    @apply bg-green-500 p-5 relative right-10 transition duration-500 ease-in-out hover:bg-green-600 transform hover:-translate-y-1 hover:scale-110
 }
 
 #contactBtn{
-    @apply bg-green-500 p-5 relative left-10
+    @apply bg-green-500 p-5 relative left-10 transition duration-500 ease-in-out hover:bg-green-600 transform hover:-translate-y-1 hover:scale-110
 }
